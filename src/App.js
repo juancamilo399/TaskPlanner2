@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import './components/App.css';
 import { Login } from './components/Login';
 import Swal from 'sweetalert2'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, HashRouter, Route, Switch } from 'react-router-dom'
 import { TodoApp } from './components/TodoApp';
+import { NewTask } from './components/NewTask';
+import { UserProfile } from './components/UserProfile';
 
 function App() {
   localStorage.setItem("Username", "juan@gmail.com");
@@ -56,19 +58,19 @@ function App() {
   return (
     <div>
 
-      <Router>
-        <div className="App">
-      
-          <div>
+      <HashRouter basename="/">
+        <div>
+          <Switch>
 
-            <Route path="/" component={correct} />
-            <Route path="/todo" component={correct} />
+            <Route exact path="/" component={correct} />
+            <Route path="/new" component={NewTask} />
+            <Route path="/profile" component={UserProfile} />
+          </Switch>
 
-          </div>
         </div>
-      </Router>
-
+      </HashRouter>
     </div>
+
   )
 }
 

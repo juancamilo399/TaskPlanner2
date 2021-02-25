@@ -21,8 +21,9 @@ export const CardItem = ({description,responsible,status,dueDate}) => {
     }));
 
     const classes = useStyles();
-
+    const date = new Date(Date.parse(dueDate))
     return (
+        
         <div>
             <Grid  item xs={10}>
             <Card variant="outlined">
@@ -33,7 +34,7 @@ export const CardItem = ({description,responsible,status,dueDate}) => {
                     </Typography>
 
                     <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    {`${status} - ${dueDate.format('DD-MM-YYYY')}`}
+                    {`${status} - ${date.toLocaleDateString("en-US")}`}
                     </Typography>
 
                     <Typography className={classes.title} color="textSecondary" gutterBottom>

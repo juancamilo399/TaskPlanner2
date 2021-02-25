@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import './App.css';
 import { TodoList } from './TodoList';
-import { DrawerComponet } from './DrawerComponet';
+import { DrawerComponent } from './DrawerComponet';
 import Button from '@material-ui/core/Button';
 import moment from 'moment';
-
+import { Link } from 'react-router-dom';
 export const TodoApp = () => {
+
+
 
     const list = [{
         "description": "some description text ",
@@ -35,6 +37,7 @@ export const TodoApp = () => {
         "dueDate": moment(),
     }]
 
+
     const [drawer, setdrawer] = useState({
         left: false
     })
@@ -45,6 +48,7 @@ export const TodoApp = () => {
         }
         setdrawer({ ...drawer, [anchor]: open });
     };
+
 
     return (
 
@@ -58,9 +62,28 @@ export const TodoApp = () => {
 
             <br></br>
 
-            <DrawerComponet drawer={drawer} toggleDrawerf={toggleDrawer}></DrawerComponet>
+            <DrawerComponent drawer={drawer} toggleDrawerf={toggleDrawer}></DrawerComponent>
+
 
             <TodoList todoList={list} />
+            <br></br>
+            <br></br>
+
+            <div style={{ textAlign: "center" }}>
+                <Button
+                    type="submit"
+
+                    variant="contained"
+                    color="primary"
+                    className="submit"
+
+                >
+
+                    <Link to="/new" style={{ color: "white" }}> New</Link>
+
+
+                </Button>
+            </div>
         </div>
 
     )
