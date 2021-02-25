@@ -9,6 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Divider from '@material-ui/core/Divider';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import HomeIcon from '@material-ui/icons/Home';
 import { Link } from 'react-router-dom';
 
 export const DrawerComponent = ({drawer,toggleDrawerf}) => {
@@ -30,6 +31,10 @@ export const DrawerComponent = ({drawer,toggleDrawerf}) => {
       localStorage.removeItem('Username');
       localStorage.removeItem('Password');
       window.location.href = "/";
+    }
+
+    const handleHome = () =>{
+      window.location.href="/"
     }
 
     
@@ -59,6 +64,16 @@ export const DrawerComponent = ({drawer,toggleDrawerf}) => {
               <ListItem onClick={handleLogout} button key={'logout'}>
                 <ListItemIcon><ExitToAppIcon /> </ListItemIcon>
                 <ListItemText primary={'logout'} />
+              </ListItem>
+          
+          </List>
+
+          <Divider />
+          <List>
+            
+              <ListItem onClick={handleHome} button key={'Home'}>
+                <ListItemIcon><HomeIcon /> </ListItemIcon>
+                <ListItemText primary={'Home'} />
               </ListItem>
           
           </List>

@@ -8,6 +8,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import { DrawerComponent } from './DrawerComponet';
 
 export const NewTask = () => {
@@ -96,8 +98,18 @@ export const NewTask = () => {
                     <InputLabel  htmlFor="state" className="right-margin">
                     state:
                     </InputLabel >
+
+                    <Select
+                                labelId="state"
+                                id="state"
+                                value={statei}
+                                onChange={handleStateChange}
+                            >
                  
-                    <Input id="state" autoFocus onChange={handleStateChange} value={statei} />
+                 <          MenuItem value={"Ready"}>Ready</MenuItem>
+                            <MenuItem value={"In Progress"}>In Progress</MenuItem>
+                            <MenuItem value={"Done"}>Done</MenuItem>
+                            </Select>
                     </FormControl>
 
                     <br/>

@@ -5,18 +5,19 @@ import { DrawerComponent } from './DrawerComponet';
 import Button from '@material-ui/core/Button';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
+import { FilterModal } from './FilterModal';
 export const TodoApp = () => {
 
 
 
-    const list = [{
+    let list = [{
         "description": "some description text ",
         "responsible": {
             "name": "Santiago Carrillo",
             "email": "sancarbar@gmail"
         },
-        "status": "ready",
-        "dueDate": moment(),
+        "status": "Ready",
+        "dueDate": new Date(),
     },
     {
         "description": "some description text ",
@@ -24,8 +25,8 @@ export const TodoApp = () => {
             "name": "Juan Angel",
             "email": "juan@gmail"
         },
-        "status": "ready",
-        "dueDate": moment(),
+        "status": "Ready",
+        "dueDate":new Date(),
     },
     {
         "description": "some description text ",
@@ -33,9 +34,29 @@ export const TodoApp = () => {
             "name": "Carlos Perez",
             "email": "carlos@gmail"
         },
-        "status": "ready",
-        "dueDate": moment(),
+        "status": "Done",
+        "dueDate": new Date(),
     }]
+
+    const[filters,setFilters] = useState({
+        dueDate:null,
+        status:"",
+        responsible:""
+    });
+
+    const handleFilters = (filters) => {
+        setFilters(filters);
+    };
+
+    if(filters.dueDate !== null){
+        list = list.filter(item => item.dueDate === filters.dueDate);
+    }
+    if(filters.status !== ""){
+        list = list.filter(item => item.status === filters.status);
+    }
+    if(filters.responsible !== ""){
+        list = list.filter(item => item.responsible === filters.responsible);
+    }
 
 
     const [drawer, setdrawer] = useState({
@@ -47,6 +68,16 @@ export const TodoApp = () => {
             return;
         }
         setdrawer({ ...drawer, [anchor]: open });
+    };
+
+    const [openModal, setOpenModal] = useState(false);
+
+    const handleOpenModal = () => {
+        setOpenModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setOpenModal(false);
     };
 
 
@@ -83,6 +114,13 @@ export const TodoApp = () => {
 
 
                 </Button>
+                <br></br>
+            <br></br>
+
+                <Button variant="contained" color="primary" onClick={handleOpenModal}>
+                    Filter
+                </Button>
+                <FilterModal open={openModal} closeAction={handleCloseModal} applyFilters={handleFilters}/>
             </div>
         </div>
 
