@@ -129,7 +129,7 @@ export const FilterModal = (props) => {
                             color="primary"
                         >Filter</Button>
 
-                        <br></br>
+                    <br></br>
                         <br></br>
                         <Button
                             onClick={handleCleanFilters}

@@ -55,9 +55,8 @@ export const TodoApp = () => {
         list = list.filter(item => item.status === filters.status);
     }
     if(filters.responsible !== ""){
-        list = list.filter(item => item.responsible === filters.responsible);
+        list = list.filter(item => item.responsible.name === filters.responsible);
     }
-
 
     const [drawer, setdrawer] = useState({
         left: false
