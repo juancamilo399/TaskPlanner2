@@ -6,37 +6,12 @@ import Button from '@material-ui/core/Button';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { FilterModal } from './FilterModal';
-export const TodoApp = () => {
+import { NewTask } from './NewTask';
+export const TodoApp = ({items,addTask}) => {
 
 
+    
 
-    let list = [{
-        "description": "some description text ",
-        "responsible": {
-            "name": "Santiago Carrillo",
-            "email": "sancarbar@gmail"
-        },
-        "status": "Ready",
-        "dueDate": new Date(),
-    },
-    {
-        "description": "some description text ",
-        "responsible": {
-            "name": "Juan Angel",
-            "email": "juan@gmail"
-        },
-        "status": "Ready",
-        "dueDate":new Date(),
-    },
-    {
-        "description": "some description text ",
-        "responsible": {
-            "name": "Carlos Perez",
-            "email": "carlos@gmail"
-        },
-        "status": "Done",
-        "dueDate": new Date(),
-    }]
 
     const[filters,setFilters] = useState({
         dueDate:null,
@@ -47,6 +22,8 @@ export const TodoApp = () => {
     const handleFilters = (filters) => {
         setFilters(filters);
     };
+
+    let list = items;
 
     if(filters.dueDate !== null){
         list = list.filter(item => item.dueDate === filters.dueDate);
@@ -100,27 +77,17 @@ export const TodoApp = () => {
             <br></br>
 
             <div style={{ textAlign: "center" }}>
-                <Button
-                    type="submit"
-
-                    variant="contained"
-                    color="primary"
-                    className="submit"
-
-                >
-
-                    <Link to="/new" style={{ color: "white" }}> New</Link>
-
-
-                </Button>
-                <br></br>
-            <br></br>
+                
+             
 
                 <Button variant="contained" color="primary" onClick={handleOpenModal}>
                     Filter
                 </Button>
                 <FilterModal open={openModal} closeAction={handleCloseModal} applyFilters={handleFilters}/>
             </div>
+            <NewTask  addTask={addTask}/>
+
+
         </div>
 
     )

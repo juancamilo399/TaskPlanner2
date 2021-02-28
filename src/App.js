@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './components/App.css';
 import { Login } from './components/Login';
 import Swal from 'sweetalert2'
@@ -6,6 +6,7 @@ import { BrowserRouter as Router, HashRouter, Route, Switch } from 'react-router
 import { TodoApp } from './components/TodoApp';
 import { NewTask } from './components/NewTask';
 import { UserProfile } from './components/UserProfile';
+import axios from 'axios';
 
 function App() {
   localStorage.setItem("Username", "juan@gmail.com");
@@ -18,6 +19,32 @@ function App() {
   isLogged = (isLogged === "true" ? true : false)
 
   const [isLoggedIn, setisLoggedIn] = useState(isLogged)
+
+  const [items, setitems] = useState([])
+
+  useEffect(() => {
+    axios.get("https://taskplanner-9ccca-default-rtdb.firebaseio.com/items.json")
+        .then(response => {
+            let result = response.data;
+            let items = Object.keys(result).map(key => result[key]);
+            setitems(items);
+            console.log(items);
+        }).catch(error => {
+            alert("Fallo de Conexión con DB");
+        });
+},[]);
+
+const handleAddTask = (newTask) => {
+  axios.post("https://taskplanner-9ccca-default-rtdb.firebaseio.com/items.json",newTask)
+      .then(response => {
+          const newItems = [...items,newTask];
+          setitems(newItems);
+      }).catch(error => {
+          alert("Fallo de Conexión con DB");
+  });
+}
+
+
 
   const handleSuccessfullyLogin = (e) => {
     Swal.fire({
@@ -50,7 +77,7 @@ function App() {
   );
 
   const TodoAppView = () => (
-    <TodoApp />
+    <TodoApp items={items} addTask={handleAddTask}/>
   );
 
   const correct = isLoggedIn ? TodoAppView : LoginView
@@ -64,7 +91,7 @@ function App() {
 
             <Route exact path="/" component={correct} />
             <Route path="/new" component={NewTask} />
-            <Route path="/profile" component={UserProfile} />
+            <Route path="/profile" component={isLoggedIn ? UserProfile : LoginView} />
           </Switch>
 
         </div>

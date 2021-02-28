@@ -21,7 +21,7 @@ export const CardItem = ({description,responsible,status,dueDate}) => {
     }));
 
     const classes = useStyles();
-    const date = new Date(Date.parse(dueDate))
+    const date = Date.parse(dueDate)
     return (
         
         <div>
@@ -34,7 +34,7 @@ export const CardItem = ({description,responsible,status,dueDate}) => {
                     </Typography>
 
                     <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    {`${status} - ${date.toLocaleDateString("en-US")}`}
+                    {`${status} - ${new Date(dueDate).toLocaleString()}`}
                     </Typography>
 
                     <Typography className={classes.title} color="textSecondary" gutterBottom>

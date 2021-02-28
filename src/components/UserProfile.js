@@ -119,7 +119,7 @@ export const UserProfile = () => {
                         color="primary"
                         className="submit">
                             
-                            Add
+                            Save
                                                         
                     </Button>
   
