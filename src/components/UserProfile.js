@@ -7,20 +7,17 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import { DrawerComponent } from './DrawerComponet';
 
-export const UserProfile = () => {
+export const UserProfile = ({user,handleUpdateProfile}) => {
 
 
-    const [name, setname] = useState('')
-    const [email, setemail] = useState('')
-    const [pass, setpass] = useState('')
-    const [confirm, setconfirm] = useState('')
-
+    
+    const [name, setname] = useState(user.name)
+    const [email, setemail] = useState(user.email)
+    const [pass, setpass] = useState("")
+    const [confirm, setconfirm] = useState("")
+    console.log('user es', name)
     const handleNameChange = (e) => {
         setname(e.target.value)
-    }
-
-    const handleEmailChange = (e) => {
-        setemail(e.target.value)
     }
 
     const handlePassChange = (e) => {
@@ -44,7 +41,8 @@ export const UserProfile = () => {
 
     const handleSubmit = (e) =>{
         e.preventDefault()
-        window.location.href="/"
+        handleUpdateProfile(name,pass)
+        
     }
 
     return (
@@ -82,7 +80,7 @@ export const UserProfile = () => {
                     </InputLabel >
                     
 
-                    <Input id="email" autoFocus onChange={handleEmailChange} value={email} />
+                    <Input id="email" autoFocus  value={email} />
                     </FormControl>
                     <br/>
                     <br/>
@@ -93,7 +91,7 @@ export const UserProfile = () => {
                     </InputLabel >
                     
 
-                    <Input id="pass" autoFocus onChange={handlePassChange} value={pass} />
+                    <Input id="pass" type="password" autoFocus onChange={handlePassChange} value={pass} />
                     </FormControl>
 
                    
@@ -106,7 +104,7 @@ export const UserProfile = () => {
                     </InputLabel >
                     
 
-                    <Input id="confirm" autoFocus onChange={handleConfirmChange} value={confirm} />
+                    <Input id="confirm" type="password" autoFocus onChange={handleConfirmChange} value={confirm} />
                     </FormControl>
                    
 
