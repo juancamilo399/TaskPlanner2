@@ -6,16 +6,16 @@ import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import { DrawerComponent } from './DrawerComponet';
+import Swal from 'sweetalert2'
 
-export const UserProfile = ({user,handleUpdateProfile}) => {
+export const UserProfile = ({ user, handleUpdateProfile }) => {
 
-
-    
     const [name, setname] = useState(user.name)
     const [email, setemail] = useState(user.email)
     const [pass, setpass] = useState("")
     const [confirm, setconfirm] = useState("")
-    console.log('user es', name)
+   
+
     const handleNameChange = (e) => {
         setname(e.target.value)
     }
@@ -39,91 +39,88 @@ export const UserProfile = ({user,handleUpdateProfile}) => {
         setdrawer({ ...drawer, [anchor]: open });
     };
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = (e) => {
         e.preventDefault()
-        handleUpdateProfile(name,pass)
-        
+        if (pass===confirm){
+            handleUpdateProfile(name, pass)
+        }
+        else {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Password dont match',
+                timer: 2000,
+                timerProgressBar: false,
+                icon: 'error',
+                showConfirmButton: false
+            })
+        }
     }
 
     return (
         <CssBaseline >
-             <div className="App">
-             <header className="App-header">
-                <div style={{ textAlign: "left" }}>
-                    <Button variant="contained" disableElevation onClick={toggleDrawer('left', true)}>{'Menu'}</Button>
-                </div>
-               
-            </header>
+            <div className="App">
+                <header className="App-header">
+                    <div style={{ textAlign: "left" }}>
+                        <Button variant="contained" disableElevation onClick={toggleDrawer('left', true)}>{'Menu'}</Button>
+                    </div>
+                </header>
 
-            <br></br>
+                <br></br>
 
-            <DrawerComponent drawer={drawer} toggleDrawerf={toggleDrawer}></DrawerComponent>
+                <DrawerComponent drawer={drawer} toggleDrawerf={toggleDrawer}></DrawerComponent>
 
-               
-                <form onSubmit={handleSubmit}  className="todo-form">
-                <Typography variant="h3">Account</Typography>
-                <FormControl margin="normal" required fullWidth>
-                    <InputLabel  htmlFor="description" className="right-margin">
-                    name:
-                    </InputLabel >
-                    
-
-                    <Input id="name" autoFocus onChange={handleNameChange} value={name} />
-                    </FormControl>
-
-                    <br/>
-                    <br/>
+                <form onSubmit={handleSubmit} className="todo-form">
+                    <Typography variant="h3">Account</Typography>
 
                     <FormControl margin="normal" required fullWidth>
-                    <InputLabel  htmlFor="email" className="right-margin">
-                    email:
+                        <InputLabel htmlFor="description" className="right-margin">
+                            name:
                     </InputLabel >
-                    
-
-                    <Input id="email" autoFocus  value={email} />
+                        <Input id="name" autoFocus onChange={handleNameChange} value={name} />
                     </FormControl>
-                    <br/>
-                    <br/>
+
+                    <br />
+                    <br />
 
                     <FormControl margin="normal" required fullWidth>
-                    <InputLabel  htmlFor="pass" className="right-margin">
-                    pass:
+                        <InputLabel htmlFor="email" className="right-margin">
+                            email:
                     </InputLabel >
-                    
-
-                    <Input id="pass" type="password" autoFocus onChange={handlePassChange} value={pass} />
+                        <Input id="email" autoFocus value={email} />
                     </FormControl>
-
-                   
-                    <br/>
-                    <br/>
-
+                    <br />
+                    <br />
                     <FormControl margin="normal" required fullWidth>
-                    <InputLabel  htmlFor="confirm" className="right-margin">
-                    confirm:
+                        <InputLabel htmlFor="pass" className="right-margin">
+                            pass:
                     </InputLabel >
-                    
 
-                    <Input id="confirm" type="password" autoFocus onChange={handleConfirmChange} value={confirm} />
+
+                        <Input id="pass" type="password" autoFocus onChange={handlePassChange} value={pass} />
                     </FormControl>
-                   
+                    <br />
+                    <br />
+                    <FormControl margin="normal" required fullWidth>
+                        <InputLabel htmlFor="confirm" className="right-margin">
+                            confirm:
+                        </InputLabel >
+                            <Input id="confirm" type="password" autoFocus onChange={handleConfirmChange} value={confirm} />
+                        </FormControl>
+
 
                     <br></br>
                     <br></br>
                     <Button
                         type="submit"
-                           
                         variant="contained"
                         color="primary"
                         className="submit">
-                            
-                            Save
-                                                        
+                        Save
                     </Button>
-  
+
                 </form>
-              
-        </div>
+
+            </div>
         </CssBaseline>
     )
 }

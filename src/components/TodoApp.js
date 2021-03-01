@@ -3,20 +3,16 @@ import './App.css';
 import { TodoList } from './TodoList';
 import { DrawerComponent } from './DrawerComponet';
 import Button from '@material-ui/core/Button';
-import moment from 'moment';
-import { Link } from 'react-router-dom';
 import { FilterModal } from './FilterModal';
 import { NewTask } from './NewTask';
-export const TodoApp = ({items,addTask}) => {
+
+export const TodoApp = ({ items, addTask }) => {
 
 
-    
-
-
-    const[filters,setFilters] = useState({
-        dueDate:null,
-        status:"",
-        responsible:""
+    const [filters, setFilters] = useState({
+        dueDate: null,
+        status: "",
+        responsible: ""
     });
 
     const handleFilters = (filters) => {
@@ -25,13 +21,13 @@ export const TodoApp = ({items,addTask}) => {
 
     let list = items;
 
-    if(filters.dueDate !== null){
+    if (filters.dueDate !== null) {
         list = list.filter(item => item.dueDate === filters.dueDate);
     }
-    if(filters.status !== ""){
+    if (filters.status !== "") {
         list = list.filter(item => item.status === filters.status);
     }
-    if(filters.responsible !== ""){
+    if (filters.responsible !== "") {
         list = list.filter(item => item.responsible.name === filters.responsible);
     }
 
@@ -71,23 +67,20 @@ export const TodoApp = ({items,addTask}) => {
 
             <DrawerComponent drawer={drawer} toggleDrawerf={toggleDrawer}></DrawerComponent>
 
-
             <TodoList todoList={list} />
             <br></br>
             <br></br>
 
             <div style={{ textAlign: "center" }}>
-                
-             
-
                 <Button variant="contained" color="primary" onClick={handleOpenModal}>
                     Filter
                 </Button>
-                <FilterModal open={openModal} closeAction={handleCloseModal} applyFilters={handleFilters}/>
+                <FilterModal open={openModal} closeAction={handleCloseModal} applyFilters={handleFilters} />
+                <br></br>
+                <NewTask addTask={addTask} />
             </div>
-            <NewTask  addTask={addTask}/>
 
-
+            
         </div>
 
     )

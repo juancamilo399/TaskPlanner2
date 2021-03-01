@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import './App.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -17,16 +16,9 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        '& > *': {
-            margin: theme.spacing(3),
-        },
-    }
-}));
 
-export const NewTask = ({addTask}) => {
-    const classes = useStyles();
+export const NewTask = ({ addTask }) => {
+
 
     const [responsible, setresponsible] = useState('')
 
@@ -36,7 +28,7 @@ export const NewTask = ({addTask}) => {
 
     const [description, setdescription] = useState('')
 
-    const[openState,setOpenState] = useState(false);
+    const [openState, setOpenState] = useState(false);
 
     const handleOpenDialog = () => {
         setOpenState(true);
@@ -45,9 +37,6 @@ export const NewTask = ({addTask}) => {
     const handleCloseDialog = () => {
         setOpenState(false);
     };
-
-    
-
 
     const handleResponsibleChange = (e) => {
         setresponsible(e.target.value)
@@ -62,50 +51,36 @@ export const NewTask = ({addTask}) => {
     }
 
     const handleDateChange = (date) => {
-        console.log(date)
         setdueDate(date)
     }
 
-    const handleSubmit = (e) =>{
-        
-       e.preventDefault();
-       const newTask={
-            "description":description,
-            "responsible":{
-                "name":responsible,
-                "email":localStorage.getItem("Username")
-            },
-            "status":statei,
-            "dueDate":dueDate.toString()
-       }
-       addTask(newTask)
-    
+    const handleSubmit = (e) => {
 
+        e.preventDefault();
+        const newTask = {
+            "description": description,
+            "responsible": {
+                "name": responsible,
+                "email": localStorage.getItem("Username")
+            },
+            "status": statei,
+            "dueDate": dueDate.toString()
+        }
+        addTask(newTask)
     }
 
-    const [drawer, setdrawer] = useState({
-        left: false
-    })
-
-    const toggleDrawer = (anchor, open) => (event) => {
-        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-            return;
-        }
-        setdrawer({ ...drawer, [anchor]: open });
-    };
-    
 
     return (
 
         <div>
-            <div style={{textAlign:"center",padding:"15px"}}>
+            <div>
                 <Fab color="primary" aria-label="add" onClick={handleOpenDialog}>
                     <AddIcon />
                 </Fab>
             </div>
             <Dialog open={openState} onClose={handleCloseDialog} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title" disableTypography>
-                    <Typography variant="h3" style={{textAlign:"center"}}>New Task</Typography>
+                <DialogTitle id="form-dialog-title">
+                    <Typography variant="h3" style={{ textAlign: "center" }}>New Task</Typography>
                 </DialogTitle>
                 <DialogContent>
                     <form className="form">
@@ -126,7 +101,6 @@ export const NewTask = ({addTask}) => {
                                 id="responsible"
                                 name="responsible"
                                 autoComplete="responsible"
-                                autoFocus
                             />
                         </FormControl>
                         <FormControl margin="normal" required fullWidth>
@@ -137,27 +111,27 @@ export const NewTask = ({addTask}) => {
                                 value={statei}
                                 onChange={handleStateChange}
                             >
-                            <MenuItem value={"Ready"}>Ready</MenuItem>
-                            <MenuItem value={"In Progress"}>In Progress</MenuItem>
-                            <MenuItem value={"Done"}>Done</MenuItem>
+                                <MenuItem value={"Ready"}>Ready</MenuItem>
+                                <MenuItem value={"In Progress"}>In Progress</MenuItem>
+                                <MenuItem value={"Done"}>Done</MenuItem>
                             </Select>
                         </FormControl>
                         <FormControl margin="normal" required fullWidth>
-                           
-                                <DatePicker
+
+                            <DatePicker
                                 id="due-date"
                                 selected={dueDate}
                                 placeholderText="Due date"
-                                onChange={(dueDate)=>handleDateChange(dueDate)}>
+                                onChange={(dueDate) => handleDateChange(dueDate)}>
                             </DatePicker>
-                            
+
                         </FormControl>
-                        <FormControl margin="normal" required fullWidth>
-                            <div className={classes.root} style={{textAlign:"center"}}>
-                                <Fab style={{backgroundColor:"red"}} aria-label="Add" onClick={handleCloseDialog}>
+                        <FormControl margin="normal" fullWidth>
+                            <div style={{ textAlign: "center" }}>
+                                <Fab style={{ backgroundColor: "red" }} aria-label="Add" onClick={handleCloseDialog}>
                                     <CloseRoundedIcon />
                                 </Fab>
-                                <Fab style={{backgroundColor:"green"}} aria-label="Cancel" onClick={handleSubmit}>
+                                <Fab style={{ backgroundColor: "green" }} aria-label="Cancel" onClick={handleSubmit}>
                                     <CheckRoundedIcon />
                                 </Fab>
                             </div>
@@ -167,6 +141,6 @@ export const NewTask = ({addTask}) => {
             </Dialog>
         </div>
 
-        
+
     )
 }

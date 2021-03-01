@@ -22,68 +22,64 @@ function App() {
 
   const [items, setitems] = useState([])
 
-  const[user,setuser] = useState({
+  const [user, setuser] = useState({
     name: "",
-    email:"",
+    email: "",
     password: "",
-    
+
   });
 
 
   useEffect(() => {
     axios.get("https://taskplanner-9ccca-default-rtdb.firebaseio.com/user.json")
-        .then(response => {
-            let result = response.data;
-            let user = Object.keys(result).map(key => result[key]);
-            setuser(user[0]);
-            console.log(user)
-        }).catch(error => {
-            alert("Fallo de Conexión con DB");
-        });
-},[]);
-
-
-useEffect(() => {
-  axios.get("https://taskplanner-9ccca-default-rtdb.firebaseio.com/items.json")
       .then(response => {
-          let result = response.data;
-          let items = Object.keys(result).map(key => result[key]);
-          setitems(items);
-          console.log(items);
+        let result = response.data;
+        let user = Object.keys(result).map(key => result[key]);
+        setuser(user[0]);
+        console.log(user)
       }).catch(error => {
-          alert("Fallo de Conexión con DB");
+        alert("Fallo de Conexión con DB");
       });
-},[]);
+  }, []);
 
-const handleAddTask = (newTask) => {
-  axios.post("https://taskplanner-9ccca-default-rtdb.firebaseio.com/items.json",newTask)
+
+  useEffect(() => {
+    axios.get("https://taskplanner-9ccca-default-rtdb.firebaseio.com/items.json")
       .then(response => {
-          const newItems = [...items,newTask];
-          setitems(newItems);
+        let result = response.data;
+        let items = Object.keys(result).map(key => result[key]);
+        setitems(items);
+        console.log(items);
       }).catch(error => {
-          alert("Fallo de Conexión con DB");
-  });
-}
+        alert("Fallo de Conexión con DB");
+      });
+  }, []);
 
-const handleUpdateProfile = (newName,newPassword) => {
+  const handleAddTask = (newTask) => {
+    axios.post("https://taskplanner-9ccca-default-rtdb.firebaseio.com/items.json", newTask)
+      .then(response => {
+        const newItems = [...items, newTask];
+        setitems(newItems);
+      }).catch(error => {
+        alert("Fallo de Conexión con DB");
+      });
+  }
 
-  const newUser = {
+  const handleUpdateProfile = (newName, newPassword) => {
+    const newUser = {
       "name": newName,
       "email": localStorage.getItem("Username"),
       "password": newPassword
-  };
-  console.log(newName)
-  axios.put("https://taskplanner-9ccca-default-rtdb.firebaseio.com/user/-MUeMBXGH97zZZ59Uc9i.json",newUser)
+    };
+
+    axios.put("https://taskplanner-9ccca-default-rtdb.firebaseio.com/user/-MUeMBXGH97zZZ59Uc9i.json", newUser)
       .then(response => {
-        console.log(user)
         setuser(newUser);
-        console.log(user)
         window.location.href = "/";
       }).catch(error => {
-          alert("Fallo de Conexión con DB");
-  });
-};
-
+        alert("Fallo de Conexión con DB");
+      });
+  };
 
 
   const handleSuccessfullyLogin = (e) => {
@@ -117,27 +113,24 @@ const handleUpdateProfile = (newName,newPassword) => {
   );
 
   const TodoAppView = () => (
-    <TodoApp items={items} addTask={handleAddTask}/>
+    <TodoApp items={items} addTask={handleAddTask} />
   );
 
   const ProfileView = () => (
-    <UserProfile user={user} handleUpdateProfile={handleUpdateProfile}/>
+    <UserProfile user={user} handleUpdateProfile={handleUpdateProfile} />
   );
 
   const correct = isLoggedIn ? TodoAppView : LoginView
 
   return (
     <div>
-
       <HashRouter basename="/">
         <div>
           <Switch>
-
             <Route exact path="/" component={correct} />
             <Route path="/new" component={NewTask} />
             <Route path="/profile" component={isLoggedIn ? ProfileView : LoginView} />
           </Switch>
-
         </div>
       </HashRouter>
     </div>
